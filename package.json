@@ -11,7 +11,14 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "capcopy": "npx cap copy",
-    "captest":"npx cap open android"
+    "captest":"npx cap open android",
+    "ionic-build": "ionic build --prod",
+    "ios-add": "ionic capacitor add ios",
+    "android-add": "ionic capacitor add android",
+    "ios-open": "ionic capacitor open ios",
+    "android-open": "ionic capacitor open android",
+    "ios-copy": "ionic capacitor copy ios",
+    "android-copy": "ionic capacitor copy android"
   },
   "private": true,
   "dependencies": {
