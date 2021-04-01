@@ -11,14 +11,15 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "capcopy": "npx cap copy",
-    "captest":"npx cap open android",
+    "captest": "npx cap open android",
     "ionic-build": "ionic build --prod",
     "ios-add": "ionic capacitor add ios",
     "android-add": "ionic capacitor add android",
     "ios-open": "ionic capacitor open ios",
     "android-open": "ionic capacitor open android",
     "ios-copy": "ionic capacitor copy ios",
-    "android-copy": "ionic capacitor copy android"
+    "android-copy": "ionic capacitor copy android",
+    "resources": "capacitor-resources -p android,ios"
   },
   "private": true,
   "dependencies": {
@@ -35,6 +36,7 @@
     "@ionic/storage": "^3.0.2",
     "@ionic/storage-angular": "^3.0.2",
     "admin-lte": "^3.0.5",
+    "capacitor-resources": "^2.0.5",
     "firebase": "^8.3.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
