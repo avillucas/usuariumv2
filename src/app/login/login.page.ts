@@ -1,7 +1,6 @@
-import { Route } from '@angular/compiler/src/core';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../services/auth.service';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { AlertController } from '@ionic/angular';
 
