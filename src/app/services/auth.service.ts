@@ -26,8 +26,7 @@ export class AuthService {
             let response:AuthResponse = {user:user,loguedIn:false};            
             if (storeUser != null) {
               const stUser = storeUser as User;              
-              if(user.password == stUser.password ){
-                console.log('usuario valido', stUser);                
+              if(user.password == stUser.password ){                
                 response.user = stUser;
                 response.loguedIn = true;
               }                           

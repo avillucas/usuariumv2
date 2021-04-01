@@ -25,12 +25,12 @@ export class LoginPage implements OnInit {
     this.isSubmitted = false;
   }
 
-  async presentAlert() {
+  async presentAlert(message) {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Error de validación',
       subHeader: 'Revise los datos',
-      message: 'Por favor revise los datos ingresados.',
+      message,
       buttons: ['OK']
     });
 
@@ -48,17 +48,19 @@ export class LoginPage implements OnInit {
    })
   }
 
-  login(){
-    console.log(this.ionicForm.value);
+  login(){    
     this.isSubmitted = true;
     if (!this.ionicForm.valid) {            
-      this.presentAlert();
+      this.presentAlert('Por favor revise los datos ingresados.');
       return false;
     } else {
-      this.authService.login(this.ionicForm.value).subscribe((res)=>{        
+      this.authService.login(this.ionicForm.value).subscribe((res)=>{                
         if(res.loguedIn){        
-          this.router.navigateByUrl('tabs/tab1');
-      }      
+          this.router.navigateByUrl('dashboard/tab1');
+          return true;
+        }else{
+          this.presentAlert('El usuario y/o contraseña son incorrectas.');
+        }      
      });
     }
   }
