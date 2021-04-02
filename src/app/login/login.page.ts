@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthapiService } from '../services/authapi.service';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { AlertController } from '@ionic/angular';
+import { ToastController } from '@ionic/angular';
 
 
 @Component({
@@ -14,27 +14,24 @@ export class LoginPage implements OnInit {
 
   isSubmitted:boolean;
   ionicForm: FormGroup;
-  alert:AlertController
 
   constructor(
     private authService : AuthapiService,
     private router : Router,
     public formBuilder: FormBuilder,
-    public alertController: AlertController
+    public toastController: ToastController
   ) { 
     this.isSubmitted = false;
   }
 
-  async presentAlert(message) {
-    const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
-      header: 'Error de validación',
-      subHeader: 'Revise los datos',
+  async presentToast(message) {
+    const toast = await this.toastController.create({
       message,
-      buttons: ['OK']
+      duration: 1500,
+      color:'danger',
+      position:'top'
     });
-
-    await alert.present();
+    toast.present();
   }
   get errorControl() {
     return this.ionicForm.controls;
@@ -43,7 +40,7 @@ export class LoginPage implements OnInit {
   ngOnInit() {
     this.isSubmitted = false;
     this.ionicForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.minLength(4), Validators.email]],
+      username: ['', [Validators.required, Validators.minLength(4), Validators.email]],
       password: ['', [Validators.required, Validators.minLength(4)]],
    })
   }
@@ -51,15 +48,18 @@ export class LoginPage implements OnInit {
   login(){    
     this.isSubmitted = true;
     if (!this.ionicForm.valid) {            
-      this.presentAlert('Por favor revise los datos ingresados.');
+      this.presentToast('Por favor revise los datos ingresados.');
       return false;
     } else {
-      this.authService.login(this.ionicForm.value).subscribe((res)=>{                
-        if(res.loguedIn){        
+      this.authService.login(this.ionicForm.value).subscribe(
+        (res)=>{                                  
+        if(res.token){        
+          //salvar el token
           this.router.navigateByUrl('dashboard/tab1');
           return true;
         }else{
-          this.presentAlert('El usuario y/o contraseña son incorrectas.');
+          this.presentToast('El usuario y/o contraseña son incorrectas.');
+          return false;
         }      
      });
     }

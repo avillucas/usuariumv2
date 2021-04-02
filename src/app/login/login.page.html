@@ -2,16 +2,16 @@
   <form [formGroup]="ionicForm" (ngSubmit)="login()" novalidate >
     <ion-item lines="full">
       <ion-label position="floating">Email</ion-label>
-      <ion-input type="email" formControlName="email" required ></ion-input>
+      <ion-input type="email" formControlName="username" required ></ion-input>
     </ion-item>
     <!-- Error messages -->
-    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.email.errors?.required">
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.username.errors?.required">
       El email es requerido.
     </span>
-    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.email.errors?.minlength">
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.username.errors?.minlength">
       El email debe tener al menos cuatro caracteres.
     </span>
-    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.email.errors?.email">
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.username.errors?.email">
       Debe agregar un email valido.
     </span>
 

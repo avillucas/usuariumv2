@@ -15,7 +15,7 @@ export class AuthapiService {
     private router: Router
   ) {}
 
-  login(postData: any): Observable<any> {
+  login(postData: any): Observable<any> {  
     return this.httpService.post('auth/login', postData);
   }
 
