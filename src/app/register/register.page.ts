@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../services/auth.service';
+import { AuthapiService } from '../services/authapi.service';
 
 @Component({
   selector: 'app-register',
@@ -9,7 +9,7 @@ import { AuthService } from '../services/auth.service';
 })
 export class RegisterPage implements OnInit {
 
-  constructor(private authService:AuthService , private router: Router) { }
+  constructor(private authService:AuthapiService , private router: Router) { }
 
   ngOnInit() {
   }
