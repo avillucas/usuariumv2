@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { HttpService } from './http.service';
-import { StorageService } from '../auth/storage.service';
+import { StorageService } from './storage.service';
 import { AuthConstants } from '../config/auth-constants';
 
 @Injectable({
