@@ -33,6 +33,7 @@ export class LoginPage implements OnInit {
     });
     toast.present();
   }
+  
   get errorControl() {
     return this.ionicForm.controls;
   }
@@ -53,8 +54,7 @@ export class LoginPage implements OnInit {
     } else {
       this.authService.login(this.ionicForm.value).subscribe(
         (res)=>{                                  
-        if(res.token){        
-          //salvar el token
+        if(res.token){                  
           this.router.navigateByUrl('dashboard/tab1');
           return true;
         }else{

@@ -1,38 +1,47 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Ingresar</ion-title>
+  </ion-toolbar>
+</ion-header>
+
 <ion-content>
-  <form [formGroup]="ionicForm" (ngSubmit)="login()" novalidate >
-    <ion-item lines="full">
-      <ion-label position="floating">Email</ion-label>
-      <ion-input type="email" formControlName="username" required ></ion-input>
-    </ion-item>
-    <!-- Error messages -->
-    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.username.errors?.required">
-      El email es requerido.
-    </span>
-    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.username.errors?.minlength">
-      El email debe tener al menos cuatro caracteres.
-    </span>
-    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.username.errors?.email">
-      Debe agregar un email valido.
-    </span>
+  <ion-row>
+    <ion-col>
+      <form [formGroup]="ionicForm" (ngSubmit)="login()" novalidate >
+        <ion-item lines="full">
+          <ion-label position="floating">Email</ion-label>
+          <ion-input type="email" formControlName="username" required ></ion-input>
+        </ion-item>
+        <!-- Error messages -->
+        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.username.errors?.required">
+          El email es requerido.
+        </span>
+        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.username.errors?.minlength">
+          El email debe tener al menos cuatro caracteres.
+        </span>
+        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.username.errors?.email">
+          Debe agregar un email valido.
+        </span>
 
-    <ion-item lines="full">
-      <ion-label position="floating">Password</ion-label>
-      <ion-input type="password" formControlName="password" required></ion-input>
-    </ion-item>    
-    <!-- Error messages -->
-    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.password.errors?.required">
-     El password es requerido.
-    </span>
-    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.password.errors?.minlength">
-      El email debe tener al menos cuatro caracteres.
-    </span>
-    <ion-row>
-      <ion-col>
-        <ion-button type="submit" color="danger" expand="block">Ingresar</ion-button>
-      </ion-col>
-    </ion-row>    
-  </form>
-
+        <ion-item lines="full">
+          <ion-label position="floating">Password</ion-label>
+          <ion-input type="password" formControlName="password" required></ion-input>
+        </ion-item>    
+        <!-- Error messages -->
+        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.password.errors?.required">
+        El password es requerido.
+        </span>
+        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.password.errors?.minlength">
+          El email debe tener al menos cuatro caracteres.
+        </span>
+        <ion-row>
+          <ion-col>
+            <ion-button type="submit" color="danger" expand="block">Ingresar</ion-button>
+          </ion-col>
+        </ion-row>    
+      </form>
+    </ion-col>
+  </ion-row>
   <ion-row>
     <ion-col>
       <a href="/register"  >Crear una cuenta</a>

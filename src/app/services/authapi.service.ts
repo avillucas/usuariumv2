@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { HttpService } from './http.service';
 import { StorageService } from './storage.service';
 import { AuthConstants } from '../config/auth-constants';
+import { AuthResponse } from '../responses/auth-response';
 
 @Injectable({
   providedIn: 'root'
@@ -16,11 +17,20 @@ export class AuthapiService {
   ) {}
 
   login(postData: any): Observable<any> {  
-    return this.httpService.post('auth/login', postData);
+    const a = this.httpService.post('auth/login', postData);
+    a.subscribe(            
+      (authResponse)=>{
+        const a  = authResponse  as AuthResponse;
+        //salvar el token
+        this.storageService.set('token',a.token);                
+      }
+    );
+    return a;
   }
 
   register(postData: any): Observable<any> {
-    return this.httpService.post('auth/register', postData);
+    
+    return this.httpService.post('auth/register', {'username':postData.username, 'password':postData.password});
   }
 
   logout() {

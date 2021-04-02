@@ -1,4 +1,4 @@
 export interface AuthResponse {
     token?:string,
-    loguedIn:boolean    
+    message:string,
 }
