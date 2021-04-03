@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Ingresar</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-row>
+    <ion-col>
+      <form [formGroup]="ionicForm" (ngSubmit)="login()" novalidate >
+        <ion-item lines="full">
+          <ion-label position="floating">Email</ion-label>
+          <ion-input type="email" formControlName="username" required ></ion-input>
+        </ion-item>
+        <!-- user error messages -->
+        <div *ngIf="(username.dirty || username.touched) && username.errors" class="errors ion-padding">
+          <span *ngIf="username.errors?.required"> El username es requerido.</span>
+          <span *ngIf="username.errors?.minlength"> El email debe tener al menos cuatro caracteres.</span>
+          <span *ngIf="username.errors?.email"> Debe agregar un email valido.</span>
+        </div>                  
+        <ion-item lines="full">
+          <ion-label position="floating">Password</ion-label>
+          <ion-input type="password" formControlName="password" required></ion-input>
+        </ion-item>    
+        <!-- password Error messages -->
+        <div *ngIf="(password.dirty || password.touched) && password.errors" class="errors ion-padding">
+          <span *ngIf="password.errors?.required"> El password es requerido.</span>
+          <span *ngIf="password.errors?.minlength"> El password debe tener al menos cuatro caracteres.</span>
+        </div>                 
+        <ion-button type="submit" color="danger" expand="block">Ingresar</ion-button>       
+      </form>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <a href="/register"  >Crear una cuenta</a>
+    </ion-col>
+  </ion-row>    
+</ion-content>

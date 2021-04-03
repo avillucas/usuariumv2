@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Registra tu usuario</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content >  
+  <form  [formGroup]="ionicRegister" (ngSubmit)="register()" novalidate >
+      <ion-item>
+        <ion-input formControlName="username" type="email" placeholder="Email" ngModel required></ion-input>
+      </ion-item>
+      <!-- Error messages -->
+      <span class="error ion-padding" *ngIf="isSubmitted && errorControl.username.errors?.required">
+        El email es requerido.
+      </span>
+      <span class="error ion-padding" *ngIf="isSubmitted && errorControl.username.errors?.minlength">
+        El email debe tener al menos cuatro caracteres.
+      </span>
+      <span class="error ion-padding" *ngIf="isSubmitted && errorControl.username.errors?.email">
+        Debe agregar un email valido.
+      </span>
+      <ion-item>
+        <ion-input formControlName="password" type="password" placeholder="Password" ngModel required ></ion-input>
+      </ion-item>   
+      <!-- Error messages -->
+      <span class="error ion-padding" *ngIf="isSubmitted && errorControl.password.errors?.required">
+        El password es requerido.
+      </span>
+      <span class="error ion-padding" *ngIf="isSubmitted && errorControl.password.errors?.minlength">
+        El password debe tener al menos cuatro caracteres.
+      </span>
+      <ion-item>
+        <ion-input  formControlName="confirm" type="password" placeholder="Repetir Password" ngModel required (keyup)="checkPassSame()"></ion-input>
+      </ion-item>   
+      <!-- Error messages -->
+      <span class="error ion-padding" *ngIf="isSubmitted && errorControl.confirm.errors?.required">
+        La confirmaci&oacute;n de password es requerida.
+      </span>
+      <span class="error ion-padding" *ngIf="isSubmitted && errorControl.confirm.errors?.minlength">
+        La confirmaci&oacute;n de password debe tener al menos cuatro caracteres.
+      </span>
+      <span class="error ion-padding" *ngIf="isSubmitted && errorMessage != ''" >
+        La confirmaci&oacute;n de password debe ser igual al password.
+      </span>                        
+      <ion-row>
+        <ion-col>
+          <ion-button type="submit" color="danger" expand="block">Crear cuenta</ion-button>
+        </ion-col>
+      </ion-row>  
+  </form>
+</ion-content>
+
