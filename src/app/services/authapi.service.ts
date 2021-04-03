@@ -1,40 +1,56 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, from, Observable } from 'rxjs';
 import { HttpService } from './http.service';
-import { StorageService } from './storage.service';
 import { AuthConstants } from '../config/auth-constants';
-import { AuthResponse } from '../responses/auth-response';
+import {map, tap, switchMap } from 'rxjs/operators';
+import { Plugins } from '@capacitor/core';
+const {Storage} = Plugins;
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthapiService {
-  constructor(
-    private httpService: HttpService,
-    private storageService: StorageService,
-    private router: Router
-  ) {}
 
-  login(postData: any): Observable<any> {  
-    const a = this.httpService.post('auth/login', postData);
-    a.subscribe(            
-      (authResponse)=>{
-        const a  = authResponse  as AuthResponse;
-        //salvar el token
-        this.storageService.set('token',a.token);                
-      }
-    );
-    return a;
+  isAuthenticated : BehaviorSubject<boolean>= new BehaviorSubject<boolean>(null);
+  token = '';  
+
+  constructor(
+    private httpService: HttpService    
+  ) {
+    this.loadToken();
   }
 
-  register(postData: any): Observable<any> {
-    
-    return this.httpService.post('auth/register', {'username':postData.username, 'password':postData.password});
+  async loadToken(){
+    const token = await Storage.get({ key: AuthConstants.AUTH });    
+    if (token && token.value) {
+      console.log('set token: ', token.value);
+      this.token = token.value;
+      this.isAuthenticated.next(true);
+    } else {
+      this.isAuthenticated.next(false);
+    }
+  }
+
+  login(postData : { username:string , password:string } ): Observable<any> {  
+    return  this.httpService.post('auth/login', postData).pipe(
+      map( (data:any) =>  data.token),
+      switchMap(
+        token=>{ 
+          return from(Storage.set({key: AuthConstants.AUTH, value: token}));                     
+      }),
+      tap( () => {
+          this.isAuthenticated.next(true);
+      })
+    );    
+  }
+
+  register(postData: {username:string, password:string}): Observable<any> { 
+      return  this.httpService.post('auth/register', {username:postData.username,password:postData.password});    
   }
 
   logout() {
-    this.storageService.remove(AuthConstants.AUTH);
-    this.router.navigate(['/login']);    
+    this.isAuthenticated.next(false);
+    return Storage.remove({key: AuthConstants.AUTH});    
   }
+
 }

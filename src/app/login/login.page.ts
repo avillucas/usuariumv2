@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthapiService } from '../services/authapi.service';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { ToastController } from '@ionic/angular';
+import { ToastController, LoadingController } from '@ionic/angular';
 
 
 @Component({
@@ -19,7 +19,8 @@ export class LoginPage implements OnInit {
     private authService : AuthapiService,
     private router : Router,
     public formBuilder: FormBuilder,
-    public toastController: ToastController
+    public toastController: ToastController,
+    private loadingController: LoadingController
   ) { 
     this.isSubmitted = false;
   }
@@ -41,27 +42,40 @@ export class LoginPage implements OnInit {
   ngOnInit() {
     this.isSubmitted = false;
     this.ionicForm = this.formBuilder.group({
-      username: ['', [Validators.required, Validators.minLength(4), Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(4)]],
+      username: ['admin@tester.com.ar', [Validators.required, Validators.minLength(4), Validators.email]],
+      password: ['admin', [Validators.required, Validators.minLength(4)]],
    })
   }
 
-  login(){    
+  get username() {
+    return this.ionicForm.get('username');
+  }
+  
+  get password() {
+    return this.ionicForm.get('password');
+  }
+
+  async login(){    
+    //
     this.isSubmitted = true;
     if (!this.ionicForm.valid) {            
       this.presentToast('Por favor revise los datos ingresados.');
       return false;
     } else {
+      const loading = await this.loadingController.create();
+      await loading.present();
+      //
       this.authService.login(this.ionicForm.value).subscribe(
-        (res)=>{                                  
-        if(res.token){                  
-          this.router.navigateByUrl('dashboard/tab1');
-          return true;
-        }else{
-          this.presentToast('El usuario y/o contraseña son incorrectas.');
-          return false;
-        }      
-     });
+        async (res) => {
+          await loading.dismiss();        
+          this.router.navigateByUrl('/dashboard', { replaceUrl: true });
+        },
+        async (res) => {
+          await loading.dismiss();
+          await this.presentToast('Usuario o password incorrecto.');          
+        }
+        
+     );
     }
   }
 

@@ -12,33 +12,22 @@
           <ion-label position="floating">Email</ion-label>
           <ion-input type="email" formControlName="username" required ></ion-input>
         </ion-item>
-        <!-- Error messages -->
-        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.username.errors?.required">
-          El email es requerido.
-        </span>
-        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.username.errors?.minlength">
-          El email debe tener al menos cuatro caracteres.
-        </span>
-        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.username.errors?.email">
-          Debe agregar un email valido.
-        </span>
-
+        <!-- user error messages -->
+        <div *ngIf="(username.dirty || username.touched) && username.errors" class="errors ion-padding">
+          <span *ngIf="username.errors?.required"> El username es requerido.</span>
+          <span *ngIf="username.errors?.minlength"> El email debe tener al menos cuatro caracteres.</span>
+          <span *ngIf="username.errors?.email"> Debe agregar un email valido.</span>
+        </div>                  
         <ion-item lines="full">
           <ion-label position="floating">Password</ion-label>
           <ion-input type="password" formControlName="password" required></ion-input>
         </ion-item>    
-        <!-- Error messages -->
-        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.password.errors?.required">
-        El password es requerido.
-        </span>
-        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.password.errors?.minlength">
-          El email debe tener al menos cuatro caracteres.
-        </span>
-        <ion-row>
-          <ion-col>
-            <ion-button type="submit" color="danger" expand="block">Ingresar</ion-button>
-          </ion-col>
-        </ion-row>    
+        <!-- password Error messages -->
+        <div *ngIf="(password.dirty || password.touched) && password.errors" class="errors ion-padding">
+          <span *ngIf="password.errors?.required"> El password es requerido.</span>
+          <span *ngIf="password.errors?.minlength"> El password debe tener al menos cuatro caracteres.</span>
+        </div>                 
+        <ion-button type="submit" color="danger" expand="block">Ingresar</ion-button>       
       </form>
     </ion-col>
   </ion-row>

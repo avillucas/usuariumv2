@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { AuthapiService } from '../services/authapi.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tab3',
@@ -7,6 +9,11 @@ import { Component } from '@angular/core';
 })
 export class Tab3Page {
 
-  constructor() {}
+  constructor(private authService: AuthapiService, private router: Router) {}
+ 
+  async logout() {
+    await this.authService.logout();
+    this.router.navigateByUrl('/', { replaceUrl: true });
+  }
 
 }
