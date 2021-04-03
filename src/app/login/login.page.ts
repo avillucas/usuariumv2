@@ -12,7 +12,6 @@ import { ToastController, LoadingController } from '@ionic/angular';
 })
 export class LoginPage implements OnInit {
 
-  isSubmitted: boolean;
   ionicForm: FormGroup;
 
   constructor(
@@ -22,7 +21,6 @@ export class LoginPage implements OnInit {
     public toastController: ToastController,
     private loadingController: LoadingController
   ) {
-    this.isSubmitted = false;
   }
 
   async presentToast(message) {
@@ -36,7 +34,6 @@ export class LoginPage implements OnInit {
   }
 
   ngOnInit() {
-    this.isSubmitted = false;
     this.ionicForm = this.formBuilder.group({
       username: ['admin@tester.com.ar', [Validators.required, Validators.minLength(4), Validators.email]],
       password: ['admin', [Validators.required, Validators.minLength(4)]],
@@ -52,8 +49,7 @@ export class LoginPage implements OnInit {
   }
 
   async login() {
-    //
-    this.isSubmitted = true;
+    //    
     if (!this.ionicForm.valid) {
       this.presentToast('Por favor revise los datos ingresados.');
       return false;
@@ -70,7 +66,6 @@ export class LoginPage implements OnInit {
           await loading.dismiss();
           await this.presentToast('Usuario o password incorrecto.');
         }
-
       );
     }
   }
