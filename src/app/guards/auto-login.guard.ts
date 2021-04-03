@@ -14,8 +14,7 @@ export class AutoLoginGuard implements CanLoad {
     return this.authService.isAuthenticated.pipe(
       filter(val => val !== null),
       take(1),
-      map(isAuthenticated => {
-        console.log('Found previous token, automatic login');
+      map(isAuthenticated => {        
         if (isAuthenticated) {          
           this.router.navigateByUrl('/dashboard', { replaceUrl: true });
         } else {                    

@@ -32,7 +32,7 @@ export class AuthapiService {
   }
 
   login(postData : { username:string , password:string } ): Observable<any> {  
-    return  this.httpService.post('auth/login', postData).pipe(
+    return  this.httpService.post(AuthConstants.LOGIN_PATH, postData).pipe(
       map( (data:any) =>  data.token),
       switchMap(
         token=>{ 
@@ -45,7 +45,7 @@ export class AuthapiService {
   }
 
   register(postData: {username:string, password:string}): Observable<any> { 
-      return  this.httpService.post('auth/register', {username:postData.username,password:postData.password});    
+      return  this.httpService.post(AuthConstants.REGISTER_PATH, {username:postData.username,password:postData.password});    
   }
 
   logout() {
