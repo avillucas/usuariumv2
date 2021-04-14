@@ -1,6 +1,6 @@
 {
-  "appId": "io.ionic.starter",
-  "appName": "loginApp",
+  "appId": "ar.com.github.aprendum",
+  "appName": "aprendum",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",
