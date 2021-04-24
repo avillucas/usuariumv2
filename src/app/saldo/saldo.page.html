@@ -1,0 +1,49 @@
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <h1>Tu saldo</h1>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="saldo"> {{ saldoService.saldo }} </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label class="subtitulo">Créditos</ion-label>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-button fill="solid"  size="large" expand="full"  (click)="escanearQr()">
+          <ion-icon name="camera" slot="start"></ion-icon>
+          <ion-label>Escanear QR</ion-label>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+    
+  </ion-grid>
+</ion-content>
+<ion-footer>
+  <ion-row>
+    <ion-col>
+      <ion-list>
+        <ion-item >
+          <ion-icon name="wallet" slot="start"></ion-icon>          
+          <ion-label>Acreditar</ion-label>
+          <ion-buttons>
+            <ion-button (click)="acreditar10()"  >10</ion-button>
+            <ion-button (click)="acreditar50()"  >50</ion-button>
+            <ion-button (click)="acreditar100()"  >100</ion-button>
+          </ion-buttons>          
+        </ion-item>
+        <ion-item (click)="logout()"  >
+          <ion-icon name="log-out" slot="start"></ion-icon>
+          <ion-label>Cerrar</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-col>
+  </ion-row>
+</ion-footer>
+
+

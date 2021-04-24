@@ -1,0 +1,21 @@
+ion-content ion-grid {
+    margin-top:15vh;
+    text-align: center;
+}
+ion-content ion-button{
+    --background:rgb(107, 223, 107);
+}
+h1,.saldo,.subtitulo{
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+h1{
+    font-size:1.2em;
+}
+.saldo{
+    font-size:5em;    
+}
+.subtitulo{
+    font-size:0.8em;    
+}

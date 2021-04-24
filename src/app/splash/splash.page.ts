@@ -12,8 +12,8 @@ export class SplashPage implements OnInit {
     private router: Router
   ) {       
     setTimeout(()=>{
-      this.router.navigateByUrl('dashboard');
-    },3500);    
+      this.router.navigateByUrl('saldo');
+    },300);    
   }
 
   ngOnInit() {

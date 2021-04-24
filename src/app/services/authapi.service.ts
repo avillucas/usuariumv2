@@ -23,7 +23,7 @@ export class AuthapiService {
   async loadToken(){
     const token = await Storage.get({ key: AuthConstants.AUTH });    
     if (token && token.value) {
-      console.log('set token: ', token.value);
+      //console.log('set token: ', token.value);
       this.token = token.value;
       this.isAuthenticated.next(true);
     } else {
@@ -31,7 +31,10 @@ export class AuthapiService {
     }
   }
 
-  login(postData : { username:string , password:string } ): Observable<any> {  
+
+  login(postData : { username:string , password:string } ): Observable<any> {     
+    const isAdmin = (AuthConstants.validarAdministrador( postData.username))? '1':'0';
+    Storage.set({key: AuthConstants.IS_ADMIN, value: isAdmin});      
     return  this.httpService.post(AuthConstants.LOGIN_PATH, postData).pipe(
       map( (data:any) =>  data.token),
       switchMap(
@@ -52,5 +55,8 @@ export class AuthapiService {
     this.isAuthenticated.next(false);
     return Storage.remove({key: AuthConstants.AUTH});    
   }
-
+  
+  isAdmin(){
+   return false;
+  }
 }
