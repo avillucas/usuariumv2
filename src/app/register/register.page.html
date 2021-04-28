@@ -8,14 +8,14 @@
   <form [formGroup]="ionicRegister" (ngSubmit)="register()" novalidate>
     <div class="input-group">
       <ion-item>
-        <ion-input formControlName="username" type="email" placeholder="Email" ngModel required></ion-input>
+        <ion-input formControlName="username" type="email" placeholder="Correo" ngModel required></ion-input>
       </ion-item>
       <!-- Error messages -->
       <!-- user error messages -->
       <div *ngIf="(username.dirty || username.touched) && username.errors" class="errors ion-padding">
         <span *ngIf="username.errors?.required"> El username es requerido.</span>
-        <span *ngIf="username.errors?.minlength"> El email debe tener al menos cuatro caracteres.</span>
-        <span *ngIf="username.errors?.email"> Debe agregar un email valido.</span>
+        <span *ngIf="username.errors?.minlength"> El correo debe tener al menos cuatro caracteres.</span>
+        <span *ngIf="username.errors?.email"> Debe agregar un correo valido.</span>
       </div>
     </div>
     <div class="input-group">

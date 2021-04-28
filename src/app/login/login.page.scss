@@ -1,20 +1,30 @@
 ion-content {
     --padding-top: 40%;
     --padding-start: 10%;
-    --padding-end: 10%;
-    --background: url("/assets/background-b.jpeg") 0 0/100% 100% no-repeat black;
+    --padding-end: 10%;    
+    --background: rgb(34,193,195);
+    --background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(45,161,253,1) 100%);
 }
 ion-button {
-    border-radius: 15px;
+    border-radius: 15px;    
+}
+ion-fab-button{
+    margin:0 2px;
 }
 
+ h1{
+    text-align: center;
+    color:white;    
+    font-size:1.6em;
+    font-weight: bold  ;
+ }
 .input-group {
     background: var(--ion-color-light);
-    border-radius: 20px;
     overflow: hidden;
-    margin-bottom: 15px;
+    margin-bottom: 25px;
 }
 
+ion-button{height:7vh;}
 .errors {
     font-size: small;
     color: var(--ion-color-light);

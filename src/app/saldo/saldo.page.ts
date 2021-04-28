@@ -55,7 +55,7 @@ export class SaldoPage implements OnInit {
   protected acreditar(creditos:number){    
     //revisar lecturas previas y usuario revisar si ya cargo 10,50,o 100 y evitarlo a menos que sea admin .             
     const isAdmin = this.authService.isAdmin() ;    
-     if(isAdmin || this.compararSaldo(creditos)){              
+     if(isAdmin || this.validarCarga(creditos)){              
       this.saldoService.cargarSaldo(creditos);
       this.presentToast('Se realizó la carga de '+creditos+' créditos.','success');      
     } else{
@@ -63,20 +63,20 @@ export class SaldoPage implements OnInit {
     }  
   }
 
-  compararSaldo(creditoDeseado:number){
-    const actual = this.saldoService.saldo;
-    if(creditoDeseado == 50 && actual != 50 && actual != 60 && actual != 150)
+  validarCarga(creditoDeseado:number){
+    const actual = this.saldoService.saldo;    
+    if(creditoDeseado == 10 && actual != 10 && actual != 60 && actual != 110 && actual != 160)
+    {
+      return true;
+    }
+    if(creditoDeseado == 50 && actual != 50 && actual != 60 && actual != 150 && actual != 160)
     {
       return true;
     }
     if(creditoDeseado == 100 && actual != 100  && actual != 150 && actual != 110 && actual != 160)
     {
       return true;
-    }
-    if(creditoDeseado == 10 && actual != 10 && actual != 60 && actual != 110)
-    {
-      return true;
-    }
+    }    
     return false;
   }
 
