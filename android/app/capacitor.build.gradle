@@ -12,7 +12,7 @@ dependencies {
     implementation project(':capacitor-community-barcode-scanner')
 
 }
-apply from: "../../node_modules/cordova-plugin-qrscanner/src/android/qrscanner.gradle"
+
 
 if (hasProperty('postBuildExtras')) {
   postBuildExtras()
