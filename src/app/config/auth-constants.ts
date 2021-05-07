@@ -4,6 +4,8 @@ export class AuthConstants {
         return usuario =='admin@admin.com';
     } 
     public static readonly IS_ADMIN = 'isAdmin'
+    public static readonly ADMIN_ROLE ='admin';
+    public static readonly CREDIT = 'credit'
     public static readonly LOGIN_PATH = 'auth/login';
     public static readonly REGISTER_PATH = 'auth/register';
 };

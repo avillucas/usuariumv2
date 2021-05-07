@@ -4,21 +4,30 @@ import { SaldoService } from '../services/saldo.service';
 import { Router } from '@angular/router';
 import { AuthapiService } from '../services/authapi.service';
 import { MenuController, ToastController } from '@ionic/angular';
+import { StorageService } from '../services/storage.service';
+import { CreditApiService } from '../services/creditapi.service';
+import { ScanResult } from '../entities/scanResult';
+import { EMPTY } from 'rxjs';
 
 @Component({
   selector: 'app-saldo',
   templateUrl: './saldo.page.html',
   styleUrls: ['./saldo.page.scss'],
 })
+
 export class SaldoPage implements OnInit {  
+
+ 
+
   constructor(
     public lectorqrService:LectorqrService,
     public saldoService:SaldoService,
     private authService: AuthapiService, 
     private router: Router,     
     public toastController:ToastController,
-    private menu: MenuController
-  ) { }
+    private storageService:StorageService,
+  ) {    
+   }
 
   async presentToast(message:string, color:string) {
     const toast = await this.toastController.create({
@@ -30,31 +39,19 @@ export class SaldoPage implements OnInit {
     toast.present();    
   }
 
-  acreditar10(){
-    this.acreditar(10);
-  }
-
-  acreditar50(){
-    this.acreditar(50);
-  }
-
-  acreditar100(){
-    this.acreditar(100);
-  }
-
-  protected acreditar(creditos:number){    
-    //revisar lecturas previas y usuario revisar si ya cargo 10,50,o 100 y evitarlo a menos que sea admin .             
-    const isAdmin = this.authService.isAdmin() ;    
-     if(isAdmin || this.saldoService.validarCarga(creditos)){              
-      this.saldoService.cargarSaldo(creditos);
-      this.presentToast('Se realizó la carga de '+creditos+' créditos.','success');      
+  async acreditar(resultado:ScanResult){    
+    const isAdmin =  await this.storageService.isAdmin() ||false;    
+    //revisar lecturas previas y usuario revisar si ya cargo 10,50,o 100 y evitarlo a menos que sea admin .                 
+     if(isAdmin || this.saldoService.validarCarga(resultado.credit)){                     
+      this.saldoService.cargarSaldo(resultado);
+      this.presentToast('Se realizó la carga de '+resultado.credit+' créditos.','success');      
     } else{
       this.presentToast('No puede cargar 2 veces el mismo monto.','danger');
     }  
   }
 
-
-  ngOnInit() {
+  async ngOnInit() {
+   this.saldoService.saldo = await this.storageService.saldo;
   }
 
   ngAfterViewInit() {
@@ -62,9 +59,9 @@ export class SaldoPage implements OnInit {
   }  
   
   async escanearQr(){        
-    const creditos = await this.lectorqrService.escanear();   
-    if(creditos > 0 ){
-      this.acreditar(creditos)    ;  
+    const resultado = await this.lectorqrService.escanear();       
+    if(resultado.credit != 0 ){
+      this.acreditar(resultado)    ;  
     }
   }
 
@@ -77,6 +74,7 @@ export class SaldoPage implements OnInit {
   }
 
   async logout() {
+    this.lectorqrService.stopScan();
     await this.authService.logout();
     this.router.navigateByUrl('/login', { replaceUrl: true });
   }

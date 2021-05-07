@@ -3,8 +3,8 @@ import { BehaviorSubject, from, Observable } from 'rxjs';
 import { HttpService } from './http.service';
 import { AuthConstants } from '../config/auth-constants';
 import {map, tap, switchMap } from 'rxjs/operators';
-import { Plugins } from '@capacitor/core';
-const {Storage} = Plugins;
+import { StorageService } from './storage.service';
+import { LoginResponse } from '../entities/loginResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -15,32 +15,32 @@ export class AuthapiService {
   token = '';  
 
   constructor(
-    private httpService: HttpService    
+    private httpService: HttpService    ,
+    private storageService:StorageService
   ) {
     this.loadToken();
   }
 
-  async loadToken(){
-    const token = await Storage.get({ key: AuthConstants.AUTH });    
-    if (token && token.value) {
-      //console.log('set token: ', token.value);
-      this.token = token.value;
+  async loadToken(){     
+    const token = await this.storageService.get(AuthConstants.AUTH);    
+    if (token ) {      
+      this.token = token;
       this.isAuthenticated.next(true);
     } else {
       this.isAuthenticated.next(false);
     }
   }
 
-
-  login(postData : { username:string , password:string } ): Observable<any> {     
-    const isAdmin = (AuthConstants.validarAdministrador( postData.username))? '1':'0';
-    Storage.set({key: AuthConstants.IS_ADMIN, value: isAdmin});      
+  login(postData : { username:string , password:string } ): Observable<any> {  
     return  this.httpService.post(AuthConstants.LOGIN_PATH, postData).pipe(
-      map( (data:any) =>  data.token),
+      map( (data:LoginResponse) =>  data),
       switchMap(
-        token=>{ 
-          return from(Storage.set({key: AuthConstants.AUTH, value: token}));                     
-      }),
+        (data:LoginResponse)=>{ 
+          return from(
+            this.storageService.setLoginData(data)
+          );                     
+        }
+      ),
       tap( () => {
           this.isAuthenticated.next(true);
       })
@@ -53,10 +53,7 @@ export class AuthapiService {
 
   logout() {
     this.isAuthenticated.next(false);
-    return Storage.remove({key: AuthConstants.AUTH});    
+    return this.storageService.remove(AuthConstants.AUTH);
   }
-  
-  isAdmin(){
-   return false;
-  }
+
 }

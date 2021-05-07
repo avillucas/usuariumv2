@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { SupportedFormat } from '@capacitor-community/barcode-scanner';
 import { Plugins } from '@capacitor/core';
+import { EMPTY } from 'rxjs';
+import { ScanResult } from '../entities/scanResult';
 
 @Injectable({
   providedIn: 'root'
@@ -17,23 +19,24 @@ export class LectorqrService {
     this.scanActive= false;
   }
   
-  async escanear(){
+  async escanear():Promise<ScanResult>{
     const allow = this.checkPermition();
     let acreditado = 0;
+    let codigo = '';
     if(allow){   
       this.scanActive = true;
       const { BarcodeScanner } = Plugins;  
       //BarcodeScanner.hideBackground();
       const result = await BarcodeScanner.startScan({ targetedFormats: [SupportedFormat.QR_CODE] });
-      if (result.hasContent) {
-        console.log(result.content);        
-        acreditado = this.determinarMontoAcreditado(result.content);        
+      console.log('escaneado',result);
+      if (result.hasContent) {        
+        codigo = result.content;
+        acreditado = this.determinarMontoAcreditado(codigo);        
         this.scanActive = false;
-      }else{
-        alert('No pudo ser leido');
+        return {credit:acreditado,code:codigo} as ScanResult;
       }    
     }
-    return acreditado;
+    return {credit:0,code:''} as ScanResult; 
   }
 
   preapare(){
@@ -49,7 +52,7 @@ export class LectorqrService {
   };
 
   determinarMontoAcreditado(lectura:string):number{
-    let creditos = 0;    
+    let creditos = 0;        
     if(lectura == this.CODIGO_10){
       creditos = 10;
     }else if(lectura == this.CODIGO_50){
@@ -77,7 +80,4 @@ export class LectorqrService {
         }
       });
   }
-    
-
-  
 }
