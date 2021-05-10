@@ -13,7 +13,7 @@ export class SplashPage implements OnInit {
   ) {       
     setTimeout(()=>{
       this.router.navigateByUrl('saldo');
-    },300);    
+    },1800);    
   }
 
   ngOnInit() {
