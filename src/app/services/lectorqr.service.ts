@@ -27,11 +27,11 @@ export class LectorqrService {
       this.scanActive = true;
       const { BarcodeScanner } = Plugins;  
       //BarcodeScanner.hideBackground();
-      const result = await BarcodeScanner.startScan({ targetedFormats: [SupportedFormat.QR_CODE] });
-      console.log('escaneado',result);
+      const result = await BarcodeScanner.startScan({ targetedFormats: [SupportedFormat.QR_CODE] });      
       if (result.hasContent) {        
         codigo = result.content;
-        acreditado = this.determinarMontoAcreditado(codigo);        
+        console.log('escaneado',codigo.length, this.CODIGO_50.length, codigo.trim().length);
+        acreditado = this.determinarMontoAcreditado(codigo.trim());        
         this.scanActive = false;
         return {credit:acreditado,code:codigo} as ScanResult;
       }    
@@ -53,12 +53,16 @@ export class LectorqrService {
 
   determinarMontoAcreditado(lectura:string):number{
     let creditos = 0;        
-    if(lectura == this.CODIGO_10){
-      creditos = 10;
-    }else if(lectura == this.CODIGO_50){
-      creditos = 50;
-    }else if(lectura == this.CODIGO_100){
-      creditos = 100;
+    switch(lectura){
+      case this.CODIGO_10 : 
+        creditos = 10;
+      break;
+      case this.CODIGO_50 : 
+        creditos = 50;
+      break;
+      case this.CODIGO_100 : 
+        creditos = 100;
+      break;
     }
     return creditos;
   }

@@ -3,11 +3,12 @@ import { LectorqrService } from '../services/lectorqr.service';
 import { SaldoService } from '../services/saldo.service';
 import { Router } from '@angular/router';
 import { AuthapiService } from '../services/authapi.service';
-import { MenuController, ToastController } from '@ionic/angular';
+import { MenuController, ToastController, LoadingController, AlertController } from '@ionic/angular';
 import { StorageService } from '../services/storage.service';
 import { CreditApiService } from '../services/creditapi.service';
 import { ScanResult } from '../entities/scanResult';
 import { EMPTY } from 'rxjs';
+import { AuthConstants } from '../config/auth-constants';
 
 @Component({
   selector: 'app-saldo',
@@ -26,6 +27,8 @@ export class SaldoPage implements OnInit {
     private router: Router,     
     public toastController:ToastController,
     private storageService:StorageService,
+    private loadingController:LoadingController,
+    protected alertController:AlertController
   ) {    
    }
 
@@ -68,6 +71,56 @@ export class SaldoPage implements OnInit {
   deternerScaner(){
     this.lectorqrService.stopScan();
   }
+
+  async presentAlertConfirm() {
+    const alert = await this.alertController.create({      
+      cssClass: 'alert-limpiar-saldo',
+      header: 'Limpiar Saldo',
+      message: '¡Esta seguro desea volver su saldo a cero!',
+      buttons: [
+        {
+          text: 'NO',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'SI',
+          handler: () => {
+           this.borrarSaldo();
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  resetSaldo(){
+    //this.presentAlertConfirm();
+    this.borrarSaldo();
+    
+  }
+
+  async borrarSaldo(){    
+    const loading = await this.loadingController.create();
+    await loading.present();
+    this.authService.resetCredits().subscribe(
+      async (res) => {
+        await loading.dismiss();
+        this.saldoService.reset();
+        this.storageService.set(AuthConstants.CREDIT,0);        
+        this.router.navigateByUrl('/saldo', { replaceUrl: true });
+      },
+      async (res) => {
+        await loading.dismiss();
+        await this.presentToast('El saldo no pudo ser definido en 0.','danger');
+      }
+    );
+  }
+
+  
 
   ngOnDestroy() {
     this.lectorqrService.stopScan();

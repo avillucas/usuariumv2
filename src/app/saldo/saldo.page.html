@@ -1,4 +1,14 @@
 <ion-content [class]="lectorqrService.scanActive ? 'scan':'site'" >
+  <ion-fab size="small"  vertical="top" horizontal="start" [hidden]="lectorqrService.scanActive"  >
+    <ion-fab-button  class="reload" color="danger" (click)="resetSaldo()">
+      <ion-icon name="trash-outline"></ion-icon>
+    </ion-fab-button>
+    </ion-fab>
+    <ion-fab size="small" vertical="top" horizontal="end"  [hidden]="lectorqrService.scanActive" >    
+      <ion-fab-button   (click)="logout()" color="dark">
+        <ion-icon name="log-out-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
   <ion-grid [hidden]="lectorqrService.scanActive" >
     <ion-row>
       <ion-col>
@@ -21,25 +31,27 @@
   <ion-grid>
     <ion-row>
       <ion-col>
-        <ion-button fill="solid"  size="large" expand="full"  (click)="escanearQr()" [hidden]="lectorqrService.scanActive">
+        <ion-button fill="solid" class="scanear" size="large" expand="full"  (click)="escanearQr()" [hidden]="lectorqrService.scanActive">
           <ion-icon name="qr-code-sharp" slot="start"></ion-icon>          
           <ion-label>Recargar</ion-label>
         </ion-button>
-        <ion-button fill="solid"  size="large" expand="full"  (click)="deternerScaner()" [hidden]="!lectorqrService.scanActive" >
+        <ion-button fill="solid"  class="scanear"  size="large" expand="full"  (click)="deternerScaner()" [hidden]="!lectorqrService.scanActive" >
           <ion-icon name="qr-code-sharp" slot="start"></ion-icon>          
           <ion-label>Detener</ion-label>
-        </ion-button>    
+        </ion-button>            
       </ion-col>
     </ion-row>
   </ion-grid>
+  <!--
   <ion-row>
     <ion-col>
-      <ion-button fill="solid"  color="danger" size="large" expand="full" (click)="logout()"  >
+      <ion-button fill="solid"    color="danger" size="medium" expand="full" (click)="logout()" [hidden]="lectorqrService.scanActive" >
         <ion-icon name="log-out" slot="start"></ion-icon>
-        <ion-label>Cerrar</ion-label>
-      </ion-button>
+        <ion-label>CERRAR SESIÓN</ion-label>
+      </ion-button>      
     </ion-col>
   </ion-row>
+-->
 </ion-footer>
 
 

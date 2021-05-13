@@ -56,4 +56,8 @@ export class AuthapiService {
     return this.storageService.remove(AuthConstants.AUTH);
   }
 
+  resetCredits(){
+    return  this.httpService.post(AuthConstants.RESET_CREDIT_PATH,{} );     
+  }
+
 }

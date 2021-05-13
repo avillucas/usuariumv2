@@ -8,4 +8,5 @@ export class AuthConstants {
     public static readonly CREDIT = 'credit'
     public static readonly LOGIN_PATH = 'auth/login';
     public static readonly REGISTER_PATH = 'auth/register';
+    public static readonly RESET_CREDIT_PATH = 'users/credit';
 };

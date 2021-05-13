@@ -22,6 +22,12 @@ export class SaldoService {
     this._saldo = saldo;
   }
 
+
+  reset(){  
+    this._saldo = 0 ;
+  }
+
+
   cargarSaldo(resultado:ScanResult){
     this.creditService.charge(resultado.code,resultado.credit).subscribe(
       res=>{
@@ -30,7 +36,7 @@ export class SaldoService {
       error=>{console.error(error);}
     );
     
-  }
+  }  
 
 
   validarCarga(creditoDeseado:number){

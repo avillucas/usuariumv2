@@ -1,20 +1,32 @@
 ion-content.site{
-    --padding-top: 10%;    
+    --padding-top: 23%;    
     --background: rgb(34,193,195);
     --background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(45,161,253,1) 100%);
 }
 ion-content.scan{
     --background:#00000000;
 }
-ion-content ion-grid {
-    margin-top:15vh;
+ion-content ion-grid {    
     text-align: center;
 }
-ion-content ion-button{
+
+ion-fab-button.reload{
+    width: 30px !important ; 
+    height: 30px !important ;
+}
+.alert-limpiar-saldo{
+    background-color:red;
+}
+ion-content ion-button.scanear{
     --background:rgb(107, 223, 107);
     height: 12vh;
     margin-top:18px;    
 }
+
+ion-content ion-button.salir{    
+    height: 8vh;    
+}
+
 h1,.saldo,.subtitulo{
     text-align: center;
     text-transform: uppercase;
@@ -22,14 +34,15 @@ h1,.saldo,.subtitulo{
     color: white;
 }
 h1{
-    font-size:1.2em;
+    font-size:3em;
+    margin:0;
 }
 .saldo{
-    font-size:5em;    
+    font-size:11em;    
   
 }
 .subtitulo{
-    font-size:0.8em;    
+    font-size:2em;    
 }
 
 .scanbox{
